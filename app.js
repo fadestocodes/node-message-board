@@ -17,7 +17,14 @@ app.get('/new', (req,res) => {
     res.render('form' )
 });
 
-
+app.get('/messages/:id', (req,res) => {
+    const message = messages.find( msg => msg.id === parseInt(req.params.id)  );
+    if (message){
+        res.render('messageDetails', {message});
+    } else {
+        res.status(404).send('Message Not Found');
+    }
+});
 
 
 app.use('/', homeRouter);

@@ -8,7 +8,11 @@
                 </div>
                 <small><%= message.added %></small>
                 <br>
+                <a href="/messages/<%= message.id%>">
+                    <small>Open</small>
+                </a>
             </div>
-        <% } %>
+            <% } %>
+            <a href="/new"><button type="button">Add New Message</button></a>
     </body>
 </html>
