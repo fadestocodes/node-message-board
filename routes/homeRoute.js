@@ -1,21 +1,10 @@
+const {getAllMessages} = require('../db/queries');
 const {Router} = require('express');
 const homeRouter = Router();
-homeRouter.get('/', (req,res) => res.send("Homepage"));
 
-const messages = [
-    {
-        id : 1,
-        text : 'Hi, there!',
-        user : 'Amando',
-        added : new Date()
-    },
-    {
-        id : 2,
-        text : 'Hello World!',
-        user : 'Charles',
-        added : new Date()
-    }
-]
+homeRouter.get('/', async (req,res) => {
+    const rows = await getAllMessages();
+    res.render('index', {title: 'Mini Messageboard', messages : rows });
+});
 
-
-module.exports = { messages, homeRouter };
+module.exports = { homeRouter };

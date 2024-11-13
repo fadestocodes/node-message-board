@@ -1,16 +1,20 @@
+const {insertMessage} = require('../db/queries');
 const {Router} = require('express');
 const newRouter = Router();
 
-const { messages } = require('./homeRoute');
+// const { messages } = require('./homeRoute');
 
 
-newRouter.get('/', (req,res) => res.send("New Message"));
+newRouter.get('/new', (req,res) => {
+    res.render('form' );
+});
 
 newRouter.post('/', (req,res) => {
     const postText = req.body.message;
     const postUser = req.body.username;
-    const postID = messages.length + 1;
-    messages.push( {id: postID, text: postText, user: postUser, added: new Date() } );
+    const postAdded = new Date();
+    insertMessage(postText,postUser, postAdded );
+
     res.redirect('/');
 });
 

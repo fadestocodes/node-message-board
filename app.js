@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { homeRouter, messages } = require('./routes/homeRoute');
+const { homeRouter } = require('./routes/homeRoute');
 const newRouter = require('./routes/newRoute');
 app.use(express.urlencoded({ extended: true }));
 const path = require('path');
@@ -10,11 +10,12 @@ app.set('view engine', 'ejs');
 
 
 
-app.get('/', (req,res) => {
-    res.render('index', {title: 'Mini Messageboard', messages : messages });
-});
+app.use('/', homeRouter);
+app.use('/new', newRouter);
+
+
 app.get('/new', (req,res) => {
-    res.render('form' )
+    res.render('form' );
 });
 
 app.get('/messages/:id', (req,res) => {
@@ -26,9 +27,6 @@ app.get('/messages/:id', (req,res) => {
     }
 });
 
-
-app.use('/', homeRouter);
-app.use('/new', newRouter);
 const PORT = 3000;
 app.listen(PORT, ()=> {
     console.log(`Listening on Port: ${PORT}`);
